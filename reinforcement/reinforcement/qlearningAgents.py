@@ -94,7 +94,18 @@ class QLearningAgent(ReinforcementAgent):
         elif ('isWin' in dir(state)) and (state.isWin() or state.isLose()):
             return None
         else:
-            
+            q_vals_of_states = util.Counter()
+            for act in actions:
+                q_vals_of_states.update({(state, act): self.getQValue(state, act)})
+            max_val = -9999999999
+            poss_actions = []
+            for ((s, a),q) in q_vals_of_states.items():
+                if q > max_val:
+                    max_val = q
+                    poss_actions = [a]
+                elif q == max_val:
+                    poss_actions.append(a)
+            return random.choice(poss_actions)
             
         util.raiseNotDefined()
 
@@ -113,6 +124,16 @@ class QLearningAgent(ReinforcementAgent):
         legalActions = self.getLegalActions(state)
         action = None
         "*** YOUR CODE HERE ***"
+        if legalActions == ():
+            return action
+        elif ('isWin' in dir(legalActions)) and (state.isWin() or state.isLose()):
+            return action
+        else:
+            if util.flipCoin(self.epsilon):
+                action = random.choice(legalActions)
+            else:
+                action = self.computeActionFromQValues(state)
+            return action
         util.raiseNotDefined()
 
         return action
@@ -127,7 +148,8 @@ class QLearningAgent(ReinforcementAgent):
           it will be called on your behalf
         """
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+        self.q_values[(state, action)] = (1-self.alpha) * self.q_values[(state,action)] + self.alpha*(reward + self.discount*self.computeValueFromQValues(nextState))
+        # util.raiseNotDefined()
 
     def getPolicy(self, state):
         return self.computeActionFromQValues(state)
