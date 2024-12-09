@@ -20,68 +20,72 @@
 # value iteration.
 
 def question2():
-    answerDiscount = 0.9
+    answerDiscount = 0.9 
     # answerNoise = 0.2
 
     # TRIAL AND ERROR?
-    answerNoise = 0
+    answerNoise = 0.0
     return answerDiscount, answerNoise
 
 def question3a():
-    answerDiscount = 0.1
-    answerNoise = 0
-    answerLivingReward = 0
+    # Prefer the close exit (+1), risking the cliff (-10)  
 
-    # Prefer the close exit (+1), risking the cliff (-10)
-    # answerDiscount = None
-    # answerNoise = None
-    # answerLivingReward = None
+    # high: focus on more inmediate rewards 
+    answerDiscount = 0.9
+    # low: ensures the agent can take a risky path confidently
+    answerNoise = 0.2
+    # negative: discourages unnecessarily long paths
+    answerLivingReward = -3
     return answerDiscount, answerNoise, answerLivingReward
     # If not possible, return 'NOT POSSIBLE'
 
 def question3b():
-    answerDiscount = 0.1
-    answerNoise = 0.01
+    # Prefer the close exit (+1), but avoiding the cliff (-10)
+
+    # focus on getting the exit (little less) fast 
+    answerDiscount = 0.2
+    # low: agent avoids high-risk paths
+    answerNoise = 0.1
+    # safe but shorter path
     answerLivingReward = 0
 
-    # Prefer the close exit (+1), but avoiding the cliff (-10)
-    # answerDiscount = None
-    # answerNoise = None
-    # answerLivingReward = None
     return answerDiscount, answerNoise, answerLivingReward
     # If not possible, return 'NOT POSSIBLE'
 
 def question3c():
     # Prefer the distant exit (+10), risking the cliff (-10)
-    answerDiscount = 1
+
+    # high: values high payoff over inmediate rewards
+    answerDiscount = 0.9
+    # low: confidently navigate risky paths
     answerNoise = 0
+    # slightly negative: discourage detours
     answerLivingReward = -0.5
 
-    # answerDiscount = None
-    # answerNoise = None
-    # answerLivingReward = None
     return answerDiscount, answerNoise, answerLivingReward
     # If not possible, return 'NOT POSSIBLE'
 
 def question3d():
     # Prefer the distant exit (+10), avoiding the cliff (-10)
-    answerDiscount = 1
-    answerNoise = 0.02
-    answerLivingReward = -0.01
-    # answerDiscount = None
-    # answerNoise = None
-    # answerLivingReward = None
+
+    # high: prioritizes the distant exit payoff
+    answerDiscount = 0.9
+    # low: avoids risky paths but seeks distant goal
+    answerNoise = 0.2
+    # 0: encourages a longer path
+    answerLivingReward = 0
     return answerDiscount, answerNoise, answerLivingReward
     # If not possible, return 'NOT POSSIBLE'
 
 def question3e():
     # Avoid both exits and the cliff (so an episode should never terminate)
-    answerDiscount = 1
+
+    # 0: no future rewards, avoiding exits entirely
+    answerDiscount = 0
+    # 0: agent doesn't need to aim for any specific path
     answerNoise = 0
-    answerLivingReward = 10
-    # answerDiscount = None
-    # answerNoise = None
-    # answerLivingReward = None
+    # high:  encourages the agent to stay in the grid indefinitely
+    answerLivingReward = 0.9
     return answerDiscount, answerNoise, answerLivingReward
     # If not possible, return 'NOT POSSIBLE'
 
